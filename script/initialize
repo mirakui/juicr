@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'pit'
+
+Pit.get('juicr_oauth', :require =>{
+  'consumer_key' => '',
+  'consumer_secret' => ''
+})
