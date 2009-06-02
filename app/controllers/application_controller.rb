@@ -9,14 +9,22 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
 
   def user_from_session
-    User.find( :first, :conditions => {
-      :screen_name => session[:screen_name],
-      :token => session[:access_token]
-    })
+    case RAILS_ENV
+    when 'production'
+      User.find( :first, :conditions => {
+        :screen_name => session[:screen_name],
+        :token => session[:access_token]
+      })
+    when 'development'
+      User.find( :first, :conditions => {
+        :screen_name => DEBUG_SCREEN_NAME
+      })
+    end
   end
 
   def login_required
     unless user_from_session
+      session[:oauth_backuri] = request.request_uri
       redirect_to :controller => :users, :action => :create
       return
     end

@@ -1,0 +1,83 @@
+<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function() {
+  $(".advanced").hide();
+  $(".loading-img").hide();
+  $(".validator-img").hide();
+});
+
+function showAdvance() {
+  $(".advanced").slideDown();
+  $(".not-advanced").hide();
+}
+
+//]]>
+</script>
+
+<div id="channel-form-box">
+<% form_for(@channel) do |f| %>
+  <%= f.error_messages %>
+
+  <ul class="channel-form-ul basic">
+    <li>
+      <%= f.label :name, 'Channel Name' %>
+      <span class="required">*</span><br />
+      <p class="notice">ex. "My Favorite Twitter-ers"</p>
+      <%= f.text_field :name %>
+    </li>
+    <li>
+      <%= f.label :alias, 'Channel Page Name' %><br />
+      <%= BASE_URI %>/<%= @channel.author.screen_name %>_<%= f.text_field :alias %>
+      <%=
+        observe_field(:channel_alias,
+          :frequency => 1.00,
+          #:update => :validate_alias_result,
+          :with => 'alias',
+          :url => { :action => :validate_alias }) 
+      %>
+      <span id="validate_alias_result"></span>
+      <%= image_tag 'loading.gif', :class=> 'loading-img', :id =>'validate_alias_loading_img' %>
+      <%= image_tag 'validator_success.png', :class=> 'validator-img success', :id =>'validate_alias_validator_success_img' %>
+      <%= image_tag 'validator_failure.png', :class=> 'validator-img failure', :id =>'validate_alias_validator_failure_img' %>
+    </li>
+    <li>
+      <%= f.label :description, 'Description' %><br />
+      <%= f.text_field :description, :size => 60 %>
+    </li>
+    <li>
+      <%= f.label :extract_users, 'Extract User List' %>
+      <span class="required">*</span><br />
+      <p class="notice">linefeed separeted screen_names</p>
+      <%= f.text_area :extract_users, :cols => 10, :rows => 15 %>
+    </li>
+    <li>
+      <%= f.label :permission, 'Who can view this channel?' %><br />
+      <%= f.select :permission, [["Everyone (public)", Channel::PERM_SHOW_PUBLIC], ["Only Me (private)", Channel::PERM_SHOW_PRIVATE]] %>
+    </li>
+  </ul>
+  <p><%= link_to_function 'Click HERE to Open Advanced Settings', 'showAdvance()', :class => 'not-advanced' %></p>
+  <ul class="channel-form-ul advanced">
+    <li><h3>Advanced Settings</h3></li>
+    <li>
+      <%= f.label :keywords, 'Search Keywords' %><br />
+      <%= f.text_field :keywords %>
+    </li>
+    <li>
+      <%= f.label :search_engine, 'Search Engine' %><br />
+      <%= f.select :search_engine, [["search.twitter.com (official)", Channel::SEARCH_ENGINE_OFFICIAL], ["YATS (recommended for Japanese)", Channel::SEARCH_ENGINE_YATS]] %>
+    </li>
+    <li>
+      <%= f.label :audiences, 'Additional Audiences'  %><br />
+      <%= f.text_area :audiences, :cols => 10, :rows => 15  %>
+    </li>
+    <li>
+      <%= f.check_box :editable %>
+      <%= f.label :editable, 'Allow all audiences to edit this chunnel' %>
+    </li>
+  </ul>
+  <%= f.hidden_field :author_id %>
+  <%= f.submit 'Submit' %>
+<% end %>
+</div>
+
+

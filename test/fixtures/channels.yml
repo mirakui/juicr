@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  query: MyString
+  keywords: MyString
+  screen_names: MyString
+  whitelists: MyString
+  permission: 1
+
+two:
+  name: MyString
+  query: MyString
+  keywords: MyString
+  screen_names: MyString
+  whitelists: MyString
+  permission: 1

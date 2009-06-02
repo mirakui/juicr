@@ -1,0 +1,143 @@
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+input[type="text"] {
+  border: 1px solid #999999;
+  padding: 2px;
+}
+
+textarea {
+  border: 1px solid #999999;
+  padding: 2px;
+}
+
+a {
+  color: #008000;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+#header {
+  margin: 0px;
+  background-color: #FFCC00;
+}
+
+#header h1#page-title {
+  margin: 0px;
+  padding: 3px 0 3px 10px;
+  font-size: 30px;
+  text-align: left;
+  font-weight: bold;
+}
+
+h2 {
+  text-align: left;
+  font-size: 50px;
+  font-weight: bold;
+  color: #999999;
+  margin-left: 8px;
+}
+
+h2#channel-name {
+  text-align: left;
+  font-size: 50px;
+  font-weight: bold;
+  color: #999999;
+  margin-left: 8px;
+}
+
+#timeline {
+  width: 600px;
+}
+
+#timeline .cell {
+  border-top: 1px dashed #CCCCCC;
+  position: relative;
+  text-align: left;
+  clear: both;
+  padding: 3px;
+  min-height: 48px;
+}
+
+#timeline .cell .icon {
+  position: absolute;
+  top: 3px;
+  left: 5px;
+}
+
+#timeline .cell .status-body {
+  margin-left: 55px;
+}
+
+#timeline .cell .screen-name {
+  font-weight: bold;
+  color: #008000;
+  margin-right: 5px;
+}
+
+#timeline .cell .status {
+  margin-top: 3px;
+}
+
+#timeline .cell .info {
+  margin-top: 2px;
+  font-size: 11px;
+  color: #999999;
+}
+
+
+#channel-form-box {
+  text-align: left;
+  margin-left: 10px;
+}
+
+#channel-form-box ul.channel-form-ul {
+}
+
+#channel-form-box ul.channel-form-ul li {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#channel-form-box ul.channel-form-ul li .required {
+  color: #800000;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+#channel-form-box ul.channel-form-ul li label {
+  color: #333333;
+  font-size: 18px;
+}
+
+#channel-form-box ul.channel-form-ul li .notice {
+  color: #666666;
+  font-size: 11px;
+}
+#channel-form-box #channel_submit {
+  margin-top: 20px;
+}
+
+#channel-form-box ul.channel-form-ul.advanced {
+  background-color: #EFEFEF;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  margin-top: 40px;
+  width: 500px;
+}
+
+#channel-form-box ul.channel-form-ul.advanced h3 {
+  text-align: left;
+  font-size: 30px;
+  font-weight: bold;
+  color: #999999;
+  margin-top: -40px;
+}
+

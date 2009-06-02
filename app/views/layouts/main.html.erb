@@ -1,0 +1,37 @@
+<%
+  action = params[:action]
+  title = 'juicr' + (action!='index' ? '::'+action : '')
+-%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+  <title><%= title %></title>
+  <script language="javascript">
+    RAILS_ENV = "<%= RAILS_ENV %>";
+  </script>
+  <!--
+  <%= stylesheet_link_tag 'http://yui.yahooapis.com/combo?2.6.0/build/reset-fonts/reset-fonts.css' %>
+  -->
+  <%= javascript_include_tag 'jquery-1.2.6.min' %>
+  <%= javascript_include_tag 'jquery.progressbar.min' %>
+  <%= javascript_include_tag 'juicr' %>
+</head>
+<body class="follotter">
+<div class="header">
+  <h1><a href="<%= url_for :root %>">juicr</a></h1>
+  <div class="nav">
+  </div>
+</div>
+<div class="flash">
+  <%= flash[:notice] %>
+</div>
+<div class="section">
+<%= yield -%>
+</div>
+<div class="footer">
+  presented by <a href="http://twitter.com/mirakui"><%= image_tag 'twitter_panda_mini.png' %>@mirakui</a>
+</div>
+</body>
+</html>
+

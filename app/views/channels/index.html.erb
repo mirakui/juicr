@@ -1,0 +1,30 @@
+<h1>Listing channels</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Query</th>
+    <th>Keywords</th>
+    <th>Screen names</th>
+    <th>Whitelists</th>
+    <th>Permission</th>
+  </tr>
+
+<% @channels.each do |channel| %>
+  <tr>
+    <td><%=h channel.name %></td>
+    <td><%=h channel.query %></td>
+    <td><%=h channel.keywords %></td>
+    <td><%=h channel.screen_names %></td>
+    <td><%=h channel.whitelists %></td>
+    <td><%=h channel.permission %></td>
+    <td><%= link_to 'Show', channel %></td>
+    <td><%= link_to 'Edit', edit_channel_path(channel) %></td>
+    <td><%= link_to 'Destroy', channel, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New channel', new_channel_path %>

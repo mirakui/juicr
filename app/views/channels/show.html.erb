@@ -1,0 +1,27 @@
+<script type="text/javascript">
+//<![CDATA[
+var TL = new Juicr.Timeline();
+TL.target = '#timeline';
+TL.query = '<%= @channel.query %>';
+$(document).ready(function() {
+  TL.reload();
+});
+
+//]]>
+</script>
+
+<%=h @channel.query %>
+
+<h2 id="channel-name">
+  #<%=h @channel.name %>
+</h2>
+
+<p>
+  <%= link_to_function 'reload', 'TL.reload()' %>
+</p>
+
+<ul id="timeline">
+</ul>
+
+<%= link_to 'Edit', edit_channel_path(@channel) %> |
+<%= link_to 'Back', channels_path %>

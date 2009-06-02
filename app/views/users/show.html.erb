@@ -1,0 +1,18 @@
+<p>
+  <b>Screen name:</b>
+  <%=h @user.screen_name %>
+</p>
+
+<p>
+  <b>Token:</b>
+  <%=h @user.token %>
+</p>
+
+<p>
+  <b>Secret:</b>
+  <%=h @user.secret %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
