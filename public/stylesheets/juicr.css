@@ -53,7 +53,7 @@ h2#channel-name {
 }
 
 #timeline {
-  width: 600px;
+  /*width: 600px;*/
 }
 
 #timeline .cell {
@@ -62,7 +62,14 @@ h2#channel-name {
   text-align: left;
   clear: both;
   padding: 3px;
+}
+
+#timeline .cell.normal {
   min-height: 48px;
+}
+
+#timeline .cell.mini {
+  min-height: auto;
 }
 
 #timeline .cell .icon {
@@ -71,8 +78,16 @@ h2#channel-name {
   left: 5px;
 }
 
+#timeline .cell.mini .icon {
+  top: 0;
+}
+
 #timeline .cell .status-body {
   margin-left: 55px;
+}
+
+#timeline .cell.mini .status-body {
+  margin-left: 33px;
 }
 
 #timeline .cell .screen-name {
@@ -91,6 +106,9 @@ h2#channel-name {
   color: #999999;
 }
 
+#timeline .cell.mini .info {
+  display: none;
+}
 
 #channel-form-box {
   text-align: left;

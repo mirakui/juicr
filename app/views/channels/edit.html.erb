@@ -2,5 +2,5 @@
 
 <%= render :partial => 'edit_form' %>
 
-<%= link_to 'Show', @channel %> |
+<%= link_to 'Show', :action => :show, :alias => @channel.alias %> |
 <%= link_to 'Back', channels_path %>

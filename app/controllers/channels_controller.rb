@@ -15,7 +15,13 @@ class ChannelsController < ApplicationController
   # GET /channels/1
   # GET /channels/1.xml
   def show
-    @channel = Channel.find(params[:id])
+    # @channel = Channel.find(params[:id])
+    if params[:id]
+      @channel = Channel.find(params[:id])
+    elsif params[:alias]
+      @channel = Channel.find(:first, :conditions => {:alias => params[:alias]})
+    end
+    @page = params[:page]
 
     respond_to do |format|
       format.html # show.html.erb
@@ -51,7 +57,7 @@ class ChannelsController < ApplicationController
     respond_to do |format|
       if @channel.save
         flash[:notice] = 'Channel was successfully created.'
-        format.html { redirect_to(@channel) }
+        format.html { redirect_to( :alias => @channel.alias, :action => :show ) }
         format.xml  { render :xml => @channel, :status => :created, :location => @channel }
       else
         format.html { render :action => "new" }
@@ -64,11 +70,12 @@ class ChannelsController < ApplicationController
   # PUT /channels/1.xml
   def update
     @channel = Channel.find(params[:id])
+    params[:channel][:alias].insert(0, "#{@channel.author.screen_name}_")
 
     respond_to do |format|
       if @channel.update_attributes(params[:channel])
         flash[:notice] = 'Channel was successfully updated.'
-        format.html { redirect_to(@channel) }
+        format.html { redirect_to( :alias => @channel.alias, :action => :show ) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

@@ -3,6 +3,8 @@
 var TL = new Juicr.Timeline();
 TL.target = '#timeline';
 TL.query = '<%= @channel.query %>';
+TL.rpp   = <%= @rpp || 100 %>;
+TL.page  = <%= @page || 1 %>;
 $(document).ready(function() {
   TL.reload();
 });
@@ -10,18 +12,20 @@ $(document).ready(function() {
 //]]>
 </script>
 
-<%=h @channel.query %>
-
 <h2 id="channel-name">
   #<%=h @channel.name %>
 </h2>
 
 <p>
-  <%= link_to_function 'reload', 'TL.reload()' %>
+  <%= link_to_function 'Reload', 'TL.reload()' %> |
+  <%= link_to 'Edit', edit_channel_path(@channel) %> |
+  <%= link_to 'Back', channels_path %>
 </p>
 
 <ul id="timeline">
 </ul>
 
-<%= link_to 'Edit', edit_channel_path(@channel) %> |
-<%= link_to 'Back', channels_path %>
+<p>
+<%= link_to 'Prev', :action => :show, :alias => @channel.alias, :page => (@page.to_i - 1) if @page && @page.to_i > 1 %>
+<%= link_to 'Next', :action => :show, :alias => @channel.alias, :page => (@page ? @page.to_i + 1 : 2) %>
+</p>
