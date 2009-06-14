@@ -31,7 +31,6 @@ function showAdvance() {
       <%=
         observe_field(:channel_alias,
           :frequency => 1.00,
-          #:update => :validate_alias_result,
           :with => 'alias',
           :url => { :action => :validate_alias }) 
       %>

@@ -22,6 +22,10 @@ a:hover {
   text-decoration: underline;
 }
 
+img.loading-img {
+  display: none;
+}
+
 
 #header {
   margin: 0px;
@@ -50,6 +54,30 @@ h2#channel-name {
   font-weight: bold;
   color: #999999;
   margin-left: 8px;
+}
+
+#channel-navi {
+  text-align: left;
+  margin-left: 10px;
+}
+
+#status-update-form {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  width: 506px;
+  text-align: right;
+}
+
+#status-update-form textarea#status_text {
+  height: 2.5em;
+  width: 500px;
+}
+
+#status-update-form input[type="button"] {
+  display: block
+  position: absolute;
+  right: 0;
 }
 
 #timeline {
@@ -107,7 +135,9 @@ h2#channel-name {
 }
 
 #timeline .cell.mini .info {
+  /*
   display: none;
+  */
 }
 
 #channel-form-box {

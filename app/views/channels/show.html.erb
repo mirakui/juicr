@@ -3,11 +3,15 @@
 var TL = new Juicr.Timeline();
 TL.target = '#timeline';
 TL.query = '<%= @channel.query %>';
-TL.rpp   = <%= @rpp || 100 %>;
-TL.page  = <%= @page || 1 %>;
-$(document).ready(function() {
+TL.rpp   = <%= @rpp %>;
+TL.page  = <%= @page %>;
+$('#timeline').ready(function() {
   TL.reload();
 });
+
+var UP = new Juicr.StatusUpdater();
+UP.inputArea = "#status-input-area";
+UP.timeline = TL;
 
 //]]>
 </script>
@@ -16,16 +20,47 @@ $(document).ready(function() {
   #<%=h @channel.name %>
 </h2>
 
-<p>
+<div id="channel-navi">
   <%= link_to_function 'Reload', 'TL.reload()' %> |
   <%= link_to 'Edit', edit_channel_path(@channel) %> |
   <%= link_to 'Back', channels_path %>
-</p>
+</div>
 
-<ul id="timeline">
+<div id="status-update-form">
+  <% remote_form_for :status,
+    :url => {:controller =>'statuses', :action => 'update'},
+    :datatype => 'json',
+    :loading  => <<-JS,
+$("#status_update_loading_img").show();
+$("#status_update_submit_button").hide();
+    JS
+    :complete => <<-JS,
+$("#status_update_loading_img").hide();
+$("#status_update_submit_button").show();
+eval("r="+request.responseText);
+TL.insertStatus(r);
+    JS
+    :failure  => <<-JS,
+eval('e='+request.responseText);
+alert('Error: ' + e.error)
+    JS
+    :success  => <<-JS do |f|
+$("#status_text").val("");
+    JS
+  %>
+  <%= f.text_area 'text' %>
+  <%= image_tag 'loading.gif', :class => 'loading-img', :id => 'status_update_loading_img' %>
+  <%= f.submit 'update', :id => 'status_update_submit_button'  %>
+<% end -%>
+</div>
+
+<!-- autopagerize_page_element -->
+<ul id="timeline" class="tlpage<%= @page %>">
 </ul>
 
 <p>
-<%= link_to 'Prev', :action => :show, :alias => @channel.alias, :page => (@page.to_i - 1) if @page && @page.to_i > 1 %>
-<%= link_to 'Next', :action => :show, :alias => @channel.alias, :page => (@page ? @page.to_i + 1 : 2) %>
+<%= link_to 'Prev', :action => :show, :alias => @channel.alias, :page => (@page.to_i - 1) if @page > 1 %>
+<%= link_to 'Next',
+  { :action => :show, :alias => @channel.alias, :page => (@page + 1)},
+  { :rel => 'next' } %>
 </p>

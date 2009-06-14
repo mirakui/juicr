@@ -21,7 +21,8 @@ class ChannelsController < ApplicationController
     elsif params[:alias]
       @channel = Channel.find(:first, :conditions => {:alias => params[:alias]})
     end
-    @page = params[:page]
+    @page = params[:page] ? params[:page].to_i : 1
+    @rpp  = params[:rpp]  ? params[:rpp].to_i  : 100
 
     respond_to do |format|
       format.html # show.html.erb
