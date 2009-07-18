@@ -1,5 +1,5 @@
 body {
-  margin: 0px;
+  margin: 0px 0px 100px 0px;
   padding: 0px;
 }
 
@@ -38,6 +38,13 @@ img.loading-img {
   font-size: 30px;
   text-align: left;
   font-weight: bold;
+}
+
+#header #header-right {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  vertical-align: middle;
 }
 
 h2 {
@@ -187,5 +194,27 @@ h2#channel-name {
   font-weight: bold;
   color: #999999;
   margin-top: -40px;
+}
+
+ul.large-channel-list {
+  text-align: left;
+}
+
+ul.large-channel-list li {
+  margin-left: 10px;
+  font-size: 50px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+
+ul.large-channel-list a {
+  color: #999999;
+  display: block;
+}
+
+ul.large-channel-list a:hover {
+  color: #000000;
+  background-color: #CCCCCC;
+  text-decoration: none;
 }
 

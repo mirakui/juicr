@@ -7,9 +7,15 @@ UserTopページ作成
 他人は編集できないようにする
 ユーザアイコン/screen_nameクリックでユーザのtwitter homeへ
 日付クリックで発言のpermalinkへ
+編集formをちゃんとする
+ログアウト
+チャンネルの削除
+発言機能
+  自分がextract user list に入っている時だけ
 
 ===Phase2===
 
+クエリ分割
 動的channel（getパラメータで指定されたユーザリストで無名channel表示）
 動的channel→静的channel変換
 #extract user listをshowの右あたりに出す
@@ -21,6 +27,5 @@ AutoPagerize対応
 
 ==done==
 発言機能
-  自分がextract user list に入っている時だけ
   発言したらタイムラインに追加
   投稿エラー時はalert

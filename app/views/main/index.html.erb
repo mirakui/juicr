@@ -1,2 +1,9 @@
-<p>token: <%= @user.screen_name %></p>
-<p><%= link_to 'login using twitter.com', :controller =>'oauth', :action=>'login' -%></p>
+<ul>
+  <li><%= link_to 'New Channel' %></li>
+  <li><%= link_to 'Profile' %></li>
+</ul>
+<ul class="large-channel-list">
+  <% @last_channels.map do |ch| %>
+    <%= link_to "<li>##{ch.alias}</li>", :controller => 'channels', :action => 'show', :alias => ch.alias %>
+  <% end %>
+</ul>

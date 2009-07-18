@@ -21,6 +21,7 @@ class ChannelsController < ApplicationController
     elsif params[:alias]
       @channel = Channel.find(:first, :conditions => {:alias => params[:alias]})
     end
+    @user = user_from_session
     @page = params[:page] ? params[:page].to_i : 1
     @rpp  = params[:rpp]  ? params[:rpp].to_i  : 100
 

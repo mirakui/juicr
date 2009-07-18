@@ -97,18 +97,6 @@
     }
   }
 
-  Juicr.StatusUpdater = function() {
-    this.inputArea = "#status-input-area";
-    this.timeline  = null;
-  }
-
-  Juicr.StatusUpdater.prototype = {
-    
-    onUpdateButtonPressed: function() {
-      alert($(this.inputArea).val());
-    }
-  }
-
   window.Juicr = Juicr;
 })();
 

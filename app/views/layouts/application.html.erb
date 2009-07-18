@@ -16,6 +16,10 @@
 <body>
 <div id="header">
   <h1 id="page-title"><%= link_to 'juicr', url_for(:root) %></h1>
+  <div id="header-right">
+    <p><%= link_to 'Profile' %>
+    <%= image_tag "http://img.twitty.jp/twitter/user/#{@user.screen_name}/s.gif" %></p>
+  </div>
 </div>
 <p style="color: green"><%= flash[:notice] %></p>
 

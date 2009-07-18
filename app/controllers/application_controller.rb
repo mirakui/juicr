@@ -16,9 +16,11 @@ class ApplicationController < ActionController::Base
         :token => session[:access_token]
       })
     when 'development'
+      logger.debug 'session = '+session.inspect
       User.find( :first, :conditions => {
         :screen_name => DEBUG_SCREEN_NAME
       })
+      #nil
     end
   end
 

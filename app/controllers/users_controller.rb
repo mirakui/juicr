@@ -14,25 +14,29 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    # Get this users favorites via OAuth
-    @access_token = OAuth::AccessToken.new(UsersController.consumer, @user.token, @user.secret)
-    RAILS_DEFAULT_LOGGER.error "Making OAuth request for #{@user.inspect} with #{@access_token.inspect}"
-    @response = UsersController.consumer.request(:get, '/favorites.json', @access_token,
-                                                 { :scheme => :query_string })
-    case @response
-    when Net::HTTPSuccess
-      @favorites = JSON.parse(@response.body)
-      respond_to do |format|
-        format.html # show.html.erb
-      end
+    if params[:screen_name]
+      @user = User.find :first, :conditions => {:screen_name => params[:screen_name]}
     else
-      RAILS_DEFAULT_LOGGER.error "Failed to get favorites via OAuth for #{@user}"
-      # The user might have rejected this application. Or there was some other error during the request.
-      flash[:notice] = "Authentication failed"
-      redirect_to :action => :index
-      return
+      @user = User.find(params[:id])
     end
+
+    ## Get this users favorites via OAuth
+    #@access_token = OAuth::AccessToken.new(UsersController.consumer, @user.token, @user.secret)
+    #logger.error "Making OAuth request for #{@user.inspect} with #{@access_token.inspect}"
+    #@response = UsersController.consumer.request(:get, '/favorites.json', @access_token,
+    #                                             { :scheme => :query_string })
+    #case @response
+    #when Net::HTTPSuccess
+    #  @favorites = JSON.parse(@response.body)
+    #  respond_to do |format|
+    #    format.html # show.html.erb
+    #  end
+    #else
+    #  # The user might have rejected this application. Or there was some other error during the request.
+    #  flash[:notice] = "Authentication failed"
+    #  redirect_to :action => :index
+    #  return
+    #end
   end
 
   # Used throughout the controller.

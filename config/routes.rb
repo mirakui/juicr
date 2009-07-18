@@ -42,6 +42,8 @@ ActionController::Routing::Routes.draw do |map|
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing the them or commenting them out if you're using named routes and resources.
 
+  map.connect 'users/:screen_name', :controller => 'users', :action => 'show',
+    :requirements => { :screen_name => /[a-zA-Z0-9_]+/ }
   map.connect ':alias', :controller => 'channels', :action => 'show',
     :requirements => { :alias => /[a-zA-Z0-9_]+_[a-zA-Z0-9_]+/ }
   map.root :controller => 'main'
