@@ -17,8 +17,12 @@
 <div id="header">
   <h1 id="page-title"><%= link_to 'juicr', url_for(:root) %></h1>
   <div id="header-right">
-    <p><%= link_to 'Profile' %>
-    <%= image_tag "http://img.twitty.jp/twitter/user/#{@user.screen_name}/s.gif" %></p>
+    <% if @user -%>
+      <p><%= @user.screen_name %>
+      <%= image_tag "http://img.twitty.jp/twitter/user/#{@user.screen_name}/s.gif" %></p>
+    <% else -%>
+      <p><%= link_to 'login using twitter OAuth', url_for(:controller => :user, :action => :create) %></p>
+    <% end -%>
   </div>
 </div>
 <p style="color: green"><%= flash[:notice] %></p>

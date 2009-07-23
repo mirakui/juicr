@@ -1,4 +1,5 @@
 class ChannelsController < ApplicationController
+  before_filter :user_from_session
   before_filter :login_required, :only => [:new, :create]
 
   # GET /channels
@@ -21,7 +22,6 @@ class ChannelsController < ApplicationController
     elsif params[:alias]
       @channel = Channel.find(:first, :conditions => {:alias => params[:alias]})
     end
-    @user = user_from_session
     @page = params[:page] ? params[:page].to_i : 1
     @rpp  = params[:rpp]  ? params[:rpp].to_i  : 100
 
@@ -35,7 +35,7 @@ class ChannelsController < ApplicationController
   # GET /channels/new.xml
   def new
     @channel = Channel.new
-    @channel.author = user_from_session
+    @channel.author = @user
 
     respond_to do |format|
       format.html # new.html.erb

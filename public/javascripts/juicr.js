@@ -10,15 +10,21 @@
   var SEARCH_ENGINE_YATS = 1;
 
   var Juicr = {
-    Timeline: {}
+    Timeline: {},
+    SearchEngine: {}
   }
+
+////////////////////////////////////////////////////////////
+// Timeline
+////////////////////////////////////////////////////////////
 
   Juicr.Timeline = function() {
     this.maxId = 0;
     this.query = '';
     this.target = '#timeline';
     this.scale = 'mini';
-    this.searchEngine = SEARCH_ENGINE_OFFICIAL;
+    this.searchEngine = null;
+    //this.searchEngine = SEARCH_ENGINE_OFFICIAL;
   }
 
   Juicr.Timeline.prototype = {
@@ -26,22 +32,15 @@
     reload: function() {
       context = this;
       $.ajax({
-        dataType:'jsonp',
-        error: function(request) { context.onReloadError(request, context) },
-        success: function(request) { context.onReloadSuccess(request, context) },
+        dataType: 'jsonp',
+        jsonp: context.searchEngine.getCallback(),
+        error: function(response) { context.onReloadError(response, context) },
+        //success: function(response) { context.searchEngine.onReloadSuccess(response, context) },
+        success: function(response) { context.onReloadSuccess(response, context) },
         type: 'get',
-        url: this.searchEngineUri(this.searchEngine, this.query)
+        url: (function(){c=context.searchEngine.getUrl(); console.debug(c); return c})(),
+        data: (function(){d=context.searchEngine.getData(context.query, context); console.debug(d); return d;})()
       });
-    },
-
-    searchEngineUri: function(searchEngine, encodedQuery) {
-      if (searchEngine==SEARCH_ENGINE_OFFICIAL) {
-        return 'http://search.twitter.com/search.json?rpp='+context.rpp+'&page='+context.page+'&q='+encodedQuery;
-      }
-      else if (searchEngine==SEARCH_ENGINE_YATS) {
-        return 'http://pcod.no-ip.org/yats/search?query='+encodedQuery;
-      }
-      return null;
     },
 
     insertStatus: function(status_obj, context) {
@@ -64,23 +63,31 @@
         +'</li>'
       )
       .prependTo(context.target);
+      context.maxId = Math.max(status_obj.id, context.maxId);
+      console.debug('status_obj.id='+status_obj.id+' context.maxId='+context.maxId);
     },
 
-    onReloadSuccess: function(request, context) {
+    onReloadSuccess: function(response, context) {
       context = context || this;
-      for (var i=request.results.length-1; i>=0; i--) {
-        var result = request.results[i];
+      results = context.searchEngine.convertResponse(response);
+      console.debug(response);
+//*
+      context = context || this;
+      for (var i=results.length-1; i>=0; i--) {
+        var result = results[i];
+        console.debug(result);
         if (result.id <= context.maxId) {
           continue;
         }
         context.insertStatus(result, context);
       }
-      context.maxId = request.max_id;
+      //context.maxId = response.max_id;
+//*/
     },
 
-    onReloadError: function(request) {
+    onReloadError: function(response) {
       context = context || this;
-      alert(request);
+      alert(response);
     },
 
     resizeProfileImage: function(profile_image_url, size_str) {
@@ -94,9 +101,85 @@
     convertDateFormat: function(src_date_str) {
       d = new Date(src_date_str);
       return d;
+    },
+
+    setSearchEngine: function(searchEngineNum) {
+      this.searchEngine = Juicr.SearchEngine.select(searchEngineNum);
     }
   }
 
+////////////////////////////////////////////////////////////
+// SearchEngine
+////////////////////////////////////////////////////////////
+
+  Juicr.SearchEngine = {
+    select: function(engine) {
+      switch (engine) {
+      case SEARCH_ENGINE_OFFICIAL:
+        return Juicr.SearchEngine.Official;
+      case SEARCH_ENGINE_YATS:
+        return Juicr.SearchEngine.Yats;
+      }
+      return null;
+    }
+  }
+
+  Juicr.SearchEngine.Official = {
+    getData: function(encodedQuery, timeline) {
+      return {
+        q:        encodedQuery,
+        rpp:      timeline.rpp,
+        page:     timeline.page,
+        since_id: timeline.maxId
+      }
+    },
+
+    getUrl: function() {
+      return 'http://search.twitter.com/search.json'
+    },
+
+    getCallback: function() {
+      return 'callback'
+    },
+
+    convertResponse: function(response) {
+      return response.results;
+    }
+  }
+  
+  Juicr.SearchEngine.Yats = {
+    getData: function(encodedQuery, timeline) {
+      return {
+        query: encodedQuery
+      }
+    },
+
+    getUrl: function() {
+      return 'http://pcod.no-ip.org/yats/search'
+    },
+
+    getCallback: function() {
+      return 'json'
+    },
+
+    convertResponse: function(response) {
+      obj = [];
+      for (i=0; i<response.length; i++) {
+        res = response[i];
+        obj.push({
+          id:                Number(res.id),
+          text:              res.content,
+          from_user:         res.user,
+          created_at:        res.time2,
+          profile_image_url: res.image
+        })
+      }
+      return obj;
+    }
+  }
+  
+
+////////////////////////////////////////////////////////////
   window.Juicr = Juicr;
 })();
 

@@ -29,8 +29,6 @@ class Channel < ActiveRecord::Base
 
   def build_extract_users
     logger.debug 'extract_users: ' + extract_users.inspect
-    #eu = extract_users
-    #eu = extract_users.split(/\s+/).join("\001")
     self.extract_users = extract_users.split(/\s+/).join("\001")
     logger.debug 'build_extract_users: ' + extract_users.inspect
     logger.debug 'search_engine: ' + search_engine.inspect

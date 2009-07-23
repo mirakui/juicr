@@ -1,7 +1,8 @@
 <script type="text/javascript">
 //<![CDATA[
 $(document).ready(function() {
-  $(".advanced").hide();
+  //$(".advanced").hide();
+  $(".not-advanced").hide();
   $(".loading-img").hide();
   $(".validator-img").hide();
 });
@@ -20,13 +21,7 @@ function showAdvance() {
 
   <ul class="channel-form-ul basic">
     <li>
-      <%= f.label :name, 'Channel Name' %>
-      <span class="required">*</span><br />
-      <p class="notice">ex. "My Favorite Twitter-ers"</p>
-      <%= f.text_field :name %>
-    </li>
-    <li>
-      <%= f.label :alias, 'Channel Page Name' %><br />
+      <%= f.label :alias, 'URL' %><br />
       <%= BASE_URI %>/<%= @channel.author.screen_name %>_<%= f.text_field :alias %>
       <%=
         observe_field(:channel_alias,
@@ -59,19 +54,11 @@ function showAdvance() {
     <li><h3>Advanced Settings</h3></li>
     <li>
       <%= f.label :keywords, 'Search Keywords' %><br />
-      <%= f.text_field :keywords %>
+      <%= f.text_field :keywords, :size => 50 %>
     </li>
     <li>
       <%= f.label :search_engine, 'Search Engine' %><br />
       <%= f.select :search_engine, [["search.twitter.com (official)", Channel::SEARCH_ENGINE_OFFICIAL], ["YATS (recommended for Japanese)", Channel::SEARCH_ENGINE_YATS]] %>
-    </li>
-    <li>
-      <%= f.label :audiences, 'Additional Audiences'  %><br />
-      <%= f.text_area :audiences, :cols => 10, :rows => 15  %>
-    </li>
-    <li>
-      <%= f.check_box :editable %>
-      <%= f.label :editable, 'Allow all audiences to edit this chunnel' %>
     </li>
   </ul>
   <%= f.hidden_field :author_id %>

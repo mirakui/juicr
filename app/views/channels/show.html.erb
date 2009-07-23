@@ -8,15 +8,17 @@ TL.target = '#timeline';
 TL.query = '<%= @channel.query %>';
 TL.rpp   = <%= @rpp %>;
 TL.page  = <%= @page %>;
+TL.setSearchEngine(<%= @channel.search_engine %>);
 $('#timeline').ready(function() {
   TL.reload();
 });
 //]]>
 </script>
 
-<h2 id="channel-name">
-  #<%=h @channel.name %>
+<h2 id="channel-alias">
+  #<%=h @channel.alias %>
 </h2>
+<p id="channel-description"><%=h @channel.description %></p>
 
 <div id="channel-navi">
   <%= link_to_function 'Reload', 'TL.reload()' %> |

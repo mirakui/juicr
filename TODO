@@ -10,8 +10,8 @@ UserTopページ作成
 編集formをちゃんとする
 ログアウト
 チャンネルの削除
-発言機能
-  自分がextract user list に入っている時だけ
+channel name 廃止
+  alias と description だけあればよくね
 
 ===Phase2===
 
@@ -24,8 +24,10 @@ channel検索
 fork(clone?)機能
 AutoPagerize対応
   むずい
+  自前実装が必要
 
 ==done==
 発言機能
   発言したらタイムラインに追加
   投稿エラー時はalert
+  自分がextract user list に入っている時だけ

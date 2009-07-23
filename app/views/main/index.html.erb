@@ -1,9 +1,19 @@
 <ul>
-  <li><%= link_to 'New Channel' %></li>
-  <li><%= link_to 'Profile' %></li>
+  <li><%= link_to 'New Channel', url_for(:new_channel) %></li>
 </ul>
+<% if @user -%>
+  <h2><%= link_to 'Your Channels', url_for(:controller => :users, :action => :show, :screen_name => @user.screen_name) %></h2>
 <ul class="large-channel-list">
-  <% @last_channels.map do |ch| %>
+  <% @user.channels.each do |ch| %>
     <%= link_to "<li>##{ch.alias}</li>", :controller => 'channels', :action => 'show', :alias => ch.alias %>
   <% end %>
 </ul>
+<% end -%>
+
+<h2><%= link_to 'Public Channels', channels_path %></h2>
+<ul class="large-channel-list">
+  <% @last_channels.each do |ch| %>
+    <%= link_to "<li>##{ch.alias}</li>", :controller => 'channels', :action => 'show', :alias => ch.alias %>
+  <% end %>
+</ul>
+

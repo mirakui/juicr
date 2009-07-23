@@ -11,13 +11,13 @@ class ApplicationController < ActionController::Base
   def user_from_session
     case RAILS_ENV
     when 'production'
-      User.find( :first, :conditions => {
+      @user = User.find( :first, :conditions => {
         :screen_name => session[:screen_name],
         :token => session[:access_token]
       })
     when 'development'
       logger.debug 'session = '+session.inspect
-      User.find( :first, :conditions => {
+      @user = User.find( :first, :conditions => {
         :screen_name => DEBUG_SCREEN_NAME
       })
       #nil
